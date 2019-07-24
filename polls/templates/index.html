@@ -22,14 +22,20 @@
                     </form>
                 </div>
         </div>
+        <div class="row" id="loaderField">
+            <div class="col-md-6">
+                <div class="loader"></div>
+                <h3>Please Wait pdf is being processed</h3>
+            </div>
+        </div>
         <hr>
-        <div class="row">
+        <div class="row" id="showButton">
             <div class="col-md-12">
                 <button id="getVal" get-url="{{request.scheme}}://{{ request.get_host }}{% url 'fetch' %}">GET PDF DATA</button>
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row" id="textButton">
             <div class="col-md-12">
                 <h3>PDF DATA</h3>
                 <textarea id="pdfdata" rows="6" cols="60">

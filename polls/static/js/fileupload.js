@@ -1,6 +1,15 @@
+$( document ).ready(function() {
+    $('#textButton').hide();
+    $('#showButton').hide();
+    $('#loaderField').hide();
+});
+
+
+
 $("form#bank-form").submit(function(event){
     event.preventDefault();
 //  activity = $("#bank-form").serializeObject();
+    $('#loaderField').show();
     var bank_name = $('form#bankname').val();
     if(bank_name != ''){
         var form = $('#bank-form')[0];
@@ -31,10 +40,13 @@ function submitFormnew(formData, serviceUrl, callbackToast, callbackMessage, tab
         dataType: 'json',
         success: function(data){
             console.log("sucess");
+            $('#loaderField').hide();
+            $('#showButton').show();
             sessionStorage.setItem("refid", data.refId);
         },
         error: function(){
         // $("body").loading('stop');
+            $('#loaderField').hide();
             console.log("error occured while fetching response");
         },
         type: 'POST',
@@ -94,5 +106,7 @@ function getPdfText(serviceUrl,callback) {
 }
 
 function successget(arg) {
-    $('textarea#pdfdata').val(arg)
+    $('#showButton').hide();
+    $('#textButton').show();
+    $('textarea#pdfdata').val(arg);
 }
