@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+    <title></title>
+</head>
+<body>
+    <div class="row">
+            <div class="col-md-12">
+                    <form method="post" id="bank-form" upload-url="{{request.scheme}}://{{ request.get_host }}{% url 'parser' %}">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <label>Please Upload File</label>
+                            <input type="file" id="filedata" class="form-control" name="filedata" />
+                        </div>
+                         <div class="col-md-3">
+                             <button type="submit" id="uploadbutton" value="Submit">UPLOAD</button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <button id="getVal" get-url="{{request.scheme}}://{{ request.get_host }}{% url 'fetch' %}">GET PDF DATA</button>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>PDF DATA</h3>
+                <textarea id="pdfdata" rows="6" cols="60">
+
+                </textarea>
+
+            </div>
+        </div>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{% static 'js/fileupload.js' %}"></script>
+</body>
+</html>
