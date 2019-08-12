@@ -14,10 +14,15 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import queue
 import csv
+from .models import PdfData
 from threading import Thread
 from uuid import uuid4
 from django.conf import settings
 import io
+from django.utils.decorators import decorator_from_middleware
+from .Middleware import Middleware
+
+load_balance = decorator_from_middleware(Middleware)
 
 def IndexPage(request):
     return render(request, 'index.html')
@@ -25,6 +30,7 @@ def IndexPage(request):
 # method to parse upload pdf
 
 @api_view(['POST'])
+@load_balance
 def uploadpdf(request):
     try:
         print("in")
@@ -33,12 +39,16 @@ def uploadpdf(request):
         filesave = fs.save(filename+'.pdf', request.FILES['filedata'])
         filepath = fs.path(filesave)
         pdf_text = extract_text_from_pdf(filepath,filename)
+        pdf_data = PdfData()
+        pdf_data.data = pdf_text
+        pdf_data.save()
         return Response({"status": "SUCCESS", "message": "file Uploaded Sucessfully","refId":filename}, content_type='application/json', status=200)
     except:
         traceback.print_exc()
         return Response({"status": "FAILURE", "message": "Invalid Request"}, content_type='application/json', status=500)
 
 @api_view(['GET'])
+@load_balance
 def fetchdata(request):
     try:
         content = request.data
@@ -67,6 +77,7 @@ def extract_text_from_pdf(pdf_path,filename):
     if text:
         with open(settings.STATIC_ROOT+'/media/'+filename+'.txt','w') as file:
             file.write(text)
+    return text
 
 def generate_ref_id():
     now = datetime.datetime.now()
