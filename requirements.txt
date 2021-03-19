@@ -2,7 +2,7 @@ certifi==2019.6.16
 chardet==3.0.4
 Django==2.2.3
 django-replicated==2.6.1
-djangorestframework==3.10.1
+djangorestframework==3.11.2
 idna==2.6
 mysqlclient==1.4.4
 pdfminer.six==20181108
